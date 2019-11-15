@@ -44,13 +44,12 @@ class adatbazis{
 				echo "<td>Del</td>";
 				echo "<td>Tilalom</td>";
 				echo "<td>Update</td>";
-				echo "<td>JOG2</td>";
-				echo "<td>$</td>";
 			echo "</tr>";
 			while($this->row = $this->result->fetch_assoc()) {
 				echo "<tr>";
 					echo "<td>" . $this->row["hal_id"]. "</td>";
-					echo "<td>" . $this->row["hal_email"]. "</td>";
+                    echo "<td>" . $this->row["hal_nev"]. "</td>";
+                    //
 					echo "<td>";
 					echo "<form method='POST'>
 							<input type='hidden' name='action' value='cmd_delete_hal'>
@@ -60,17 +59,18 @@ class adatbazis{
 					echo "</td>";
 					echo "<td>";
 					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_active'>
+							<input type='hidden' name='action' value='hal_update_tilalom'>
 							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='ACT'>
+							<input type='submit' value='Tilalom'>
 						 </form>";
 					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_inactive'>
+							<input type='hidden' name='action' value='hal_update_szabad'>
 							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='INACT'>
+							<input type='submit' value='Szabad'>
 						 </form>";						 
-						echo "[" . $this->row["hal_activity"]. "]";
-					echo "</td>";
+						echo "[" . $this->row["hal_tilalom"]. "]";
+                    echo "</td>";
+                    //
 					echo "<td>";
 					echo "<form method='POST'>
 							<input type='hidden' name='action' value='cmd_update_perm_hal'>
@@ -87,32 +87,8 @@ class adatbazis{
 							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
 							<input type='submit' value='MODERATOR'>
 						 </form>";						 
-						 echo "[" . $this->row["hal_perm"]. "]";
+						 echo "[" . $this->row["hal_tilalom"]. "]";
 					echo "</td>";
-					echo "<td>";
-						echo "<form method='POST'>";
-							echo "<select name='input_hal_perm'
-										  onchange='this.form.submit();'>";
-								echo "<option value='hal' ".(($this->row["hal_perm"]=="hal")?" selected ":" ").">hal</option>";
-								echo "<option value='admin' ".(($this->row["hal_perm"]=="admin")?" selected ":" ").">admin</option>";
-								echo "<option value='moderator' ".(($this->row["hal_perm"]=="moderator")?" selected ":" ").">moderator</option>";
-							echo "</select>";
-							echo "<input type='hidden' name='action' value='cmd_update_perm_given'>";
-							echo "<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>";	
-						echo "</form>";
-					echo "</td>";
-					echo "<td>";
-					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_hal_plus100'>
-							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='+100'>
-						 </form>";
-					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_hal_minus100'>
-							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='-100'>
-						 </form>";						 
-					echo $this->row["hal_credit"]. "</td>";
 				echo "</tr>";
 			}
 			echo "</table>";
@@ -162,7 +138,7 @@ class adatbazis{
 			return "<p>Sikertelen törlés!</p>";
 		}		
 	}
-	public function hal_update_active($input_hal_id){
+	public function hal_update_tilalom($input_hal_id){
 		if($input_hal_id=="") { return "<p>Sikertelen aktiválás, hiányzó azonosító!</p>"; }
 		$this->sql = "UPDATE 
 						hals
@@ -176,7 +152,7 @@ class adatbazis{
 			return "<p>Sikertelen aktiválás!</p>";
 		}		
 	}
-	public function hal_update_inactive($input_hal_id){
+	public function hal_update_szabad($input_hal_id){
 		if($input_hal_id=="") { return "<p>Sikertelen inaktiválás, hiányzó azonosító!</p>"; }
 		$this->sql = "UPDATE 
 						hals
