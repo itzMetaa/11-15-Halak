@@ -1,12 +1,12 @@
-<?php
-?>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-
+<?php 
+    include("adatbazis.php");
+?>
 <form method="POST">
 	<input type="hidden" name="action" value="cmd_felvetel">
 	<input type="submit" value="Felvétel űrlap">
@@ -16,24 +16,21 @@ echo "<pre>"; var_dump($_REQUEST); echo "</pre>";
 if(isset($_POST["action"]) and $_POST["action"]=="cmd_felvetel"){
 	?>
 	<form method="POST">
-		Add meg a felhasználóneved: <br />
-		<input type="text" name="input_user_username"><br />
-		Add meg a jelszavad: <br />
-		<input type="password" name="input_user_password"><br />
-		Add meg a emailed: <br />
-		<input type="email" name="input_user_email"><br />		
-		Add meg a jogosultság: <br />	
-		<select name="input_user_perm">
-			<option value='user'>user</option>
-			<option value='admin'>admin</option>
-			<option value='moderator'>moderator</option>
-		</select><br />	
-		Add meg a aktivitást: <br />	
-		<select name="input_user_activity">
-			<option value='1'>Aktív</option>
-			<option value='0' selected>Inaktív</option>
-		</select><br />	
-		<input type="hidden" name="action" value="cmd_insert_user">
+		Add meg a hal nevét: <br />
+		<input type="text" name="input_hal_nev"><br />
+		Add meg mennyi halad van: <br />
+		<input type="text" name="input_hal_db"><br />
+		Fogási tilalom alatt van-e a hal: <br />
+        <select name="input_hal_tilalom">
+			<option value='tilalom'>Tilalom alatt</option>
+			<option value='foghato'>Szabadon fogható</option>
+		</select><br />		
+		Add meg a legutolsó fogás dátumát: <br />	
+		<input type="date" id="start" name="trip-start"
+            value="2019-01-01"
+            min="1999-01-01" max="2019-12-31">
+
+		<input type="hidden" name="action" value="cmd_insert_hal">
 		<input type="submit" value="Felvétel">
 	</form>	
 	<?php
@@ -84,8 +81,8 @@ if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_user_minus100"){
 	$user_update_minus100 = new adatbazis();
 	echo $user_update_minus100->user_update_minus100($_POST["input_id"]);
 }
-$user_select = new adatbazis();
-$user_select->user_select();
+$halak = new adatbazis();
+$halak->hal_select();
 
 ?>
 
