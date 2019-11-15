@@ -40,7 +40,8 @@ class adatbazis{
 			echo "<table>";
 			echo "<tr>";
 				echo "<td>ID</td>";
-				echo "<td>Nev</td>";
+                echo "<td>Nev</td>";
+                echo "<td>Utolsó fogás";
 				echo "<td>Del</td>";
 				echo "<td>Tilalom</td>";
 				echo "<td>Update</td>";
@@ -49,6 +50,8 @@ class adatbazis{
 				echo "<tr>";
 					echo "<td>" . $this->row["hal_id"]. "</td>";
                     echo "<td>" . $this->row["hal_nev"]. "</td>";
+                    echo "<td>" . $this->row["hal_utolso_fogas"]. "</td>";
+                    
                     //
 					echo "<td>";
 					echo "<form method='POST'>
@@ -73,21 +76,18 @@ class adatbazis{
                     //
 					echo "<td>";
 					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_perm_hal'>
+							<input type='hidden' name='action' value='hal_update'>
 							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='hal'>
-						 </form>";
-					echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_perm_admin'>
-							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='ADMIN'>
-						 </form>";
-						 echo "<form method='POST'>
-							<input type='hidden' name='action' value='cmd_update_perm_moderator'>
-							<input type='hidden' name='input_id' value='".$this->row["hal_id"]."'>
-							<input type='submit' value='MODERATOR'>
-						 </form>";						 
-						 echo "[" . $this->row["hal_tilalom"]. "]";
+							<input type='submit' value='Hal módositása'>
+                         </form>";
+                         if(isset($_POST["action"]) and $_POST["action"]=="hal_update"){
+                            echo "<form method='POST'>
+                                Hal nevének módosítása:
+                                <input type ='text' name='input_hal_nev' value=''>
+                                Hal utolsó fogásának módositása:
+                                <input type ='date' name='input_hal_utolso_fogas' value=''>
+                            ";
+                        }
 					echo "</td>";
 				echo "</tr>";
 			}
