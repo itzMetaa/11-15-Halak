@@ -48,38 +48,15 @@ if(isset($_POST["action"]) and $_POST["action"]=="cmd_delete_hal"){
 	$hal_delete = new adatbazis();
 	echo $hal_delete->hal_delete($_POST["input_id"] );
 }
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_active"){
-	$hal_update_active = new adatbazis();
-	echo $hal_update_active->hal_update_active($_POST["input_id"] );
+if(isset($_POST["action"]) and $_POST["action"]=="hal_update_tilalom"){
+	$hal_update_tilalom = new adatbazis();
+	echo $hal_update_tilalom->hal_update_tilalom($_POST["input_id"] );
 }
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_inactive"){
-	$hal_update_inactive = new adatbazis();
-	echo $hal_update_inactive->hal_update_inactive($_POST["input_id"] );
+if(isset($_POST["action"]) and $_POST["action"]=="hal_update_szabad"){
+	$hal_update_szabad = new adatbazis();
+	echo $hal_update_szabad->hal_update_szabad($_POST["input_id"] );
 }
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_perm_hal"){
-	$hal_update_perm_hal = new adatbazis();
-	echo $hal_update_perm_hal->hal_update_perm_hal($_POST["input_id"] );
-}
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_perm_admin"){
-	$hal_update_perm_admin = new adatbazis();
-	echo $hal_update_perm_admin->hal_update_perm_admin($_POST["input_id"] );
-}
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_perm_moderator"){
-	$hal_update_perm_moderator = new adatbazis();
-	echo $hal_update_perm_moderator->hal_update_perm_moderator($_POST["input_id"] );
-}
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_perm_given"){
-	$hal_update_perm_given = new adatbazis();
-	echo $hal_update_perm_given->hal_update_perm_given($_POST["input_id"], $_POST["input_hal_perm"]);
-}
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_hal_plus100"){
-	$hal_update_plus100 = new adatbazis();
-	echo $hal_update_plus100->hal_update_plus100($_POST["input_id"]);
-}
-if(isset($_POST["action"]) and $_POST["action"]=="cmd_update_hal_minus100"){
-	$hal_update_minus100 = new adatbazis();
-	echo $hal_update_minus100->hal_update_minus100($_POST["input_id"]);
-}
+
 $halak = new adatbazis();
 $halak->hal_select();
 

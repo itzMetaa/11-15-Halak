@@ -97,29 +97,26 @@ class adatbazis{
 		}		
 	}
 	
-	public function hal_insert($input_hal_halname,
-							    $input_hal_password,
-							    $input_hal_email,
-							    $input_hal_perm,
-							    $input_hal_activity){
-		if($input_hal_halname=="") { return "<p>Sikertelen adatfelvétel, hiányzó felhasználónév!</p>"; }
-		if($input_hal_password=="") { return "<p>Sikertelen adatfelvétel, hiányzó jelszó!</p>"; }
+	public function hal_insert($input_hal_nev,
+							    $input_hal_raktaron,
+							    $input_hal_tilalom,
+							    $input_hal_utolso_fogas){
+		if($input_hal_nev=="") { return "<p>Sikertelen adatfelvétel, hiányzó halnév!</p>"; }
+		if($input_hal_utolso_fogas=="") { return "<p>Sikertelen adatfelvétel, hiányzó utolsó fogás!</p>"; }
 		$this->sql = "INSERT INTO 
-						hals  
+						hal
 						(
-							hal_halname ,    
-							hal_password ,  
-							hal_email ,  
-							hal_perm ,  
-							hal_activity  
+							hal_nev ,    
+							hal_raktaron ,  
+							hal_tilalom ,  
+							hal_utolso_fogas
 						)
 						VALUES
 						(
-						'$input_hal_halname',
-						'$input_hal_password',
-						'$input_hal_email',
-						'$input_hal_perm',
-						$input_hal_activity
+						'$input_hal_nev',
+						$input_hal_raktaron,
+						$input_hal_tilalom,
+						'$input_hal_utolso_fogas'
 						)
 				";
 		if($this->conn->query($this->sql)){
@@ -130,7 +127,7 @@ class adatbazis{
 	}
 	public function hal_delete($input_hal_id){
 		if($input_hal_id=="") { return "<p>Sikertelen törlés, hiányzó azonosító!</p>"; }
-		$this->sql = "DELETE FROM hals
+		$this->sql = "DELETE FROM hal
 					  WHERE hal_id	= $input_hal_id";
 		if($this->conn->query($this->sql)){
 			return "<p>Sikeres törlés!</p>";
@@ -139,120 +136,34 @@ class adatbazis{
 		}		
 	}
 	public function hal_update_tilalom($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen aktiválás, hiányzó azonosító!</p>"; }
+		if($input_hal_id=="") { return "<p>Sikertelen változtatás, hiányzó azonosító!</p>"; }
 		$this->sql = "UPDATE 
-						hals
+						hal
 					  SET
-						hal_activity = 1
+						hal_tilalom = 1
 					  WHERE 
 						hal_id	= $input_hal_id";
 		if($this->conn->query($this->sql)){
-			return "<p>Sikeres aktiválás!</p>";
+			return "<p>Sikeres változtatás!</p>";
 		} else {
-			return "<p>Sikertelen aktiválás!</p>";
+			return "<p>Sikertelen változtatás!</p>";
 		}		
 	}
 	public function hal_update_szabad($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen inaktiválás, hiányzó azonosító!</p>"; }
+		if($input_hal_id=="") { return "<p>Sikertelen változtatás, hiányzó azonosító!</p>"; }
 		$this->sql = "UPDATE 
-						hals
+						hal
 					  SET
-						hal_activity = 0
+                        hal_tilalom = 0
 					  WHERE 
 						hal_id	= $input_hal_id";
 		if($this->conn->query($this->sql)){
-			return "<p>Sikeres inaktiválás!</p>";
+			return "<p>Sikeres változtatás!</p>";
 		} else {
-			return "<p>Sikertelen inaktiválás!</p>";
-		}		
-	}
-	public function hal_update_perm_hal($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen jog beállítás(hal), hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals
-					  SET
-						hal_perm = 'hal'
-					  WHERE 
-						hal_id	= $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres jog beállítás(hal)!</p>";
-		} else {
-			return "<p>Sikertelen jog beállítás(hal)!</p>";
-		}		
-	}
-	public function hal_update_perm_admin($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen jog beállítás(admin), hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals
-					  SET
-						hal_perm = 'admin'
-					  WHERE 
-						hal_id	= $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres jog beállítás(admin)!</p>";
-		} else {
-			return "<p>Sikertelen jog beállítás(admin)!</p>";
-		}		
-	}
-	public function hal_update_perm_moderator($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen jog beállítás(moderator), hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals
-					  SET
-						hal_perm = 'moderator'
-					  WHERE 
-						hal_id	= $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres jog beállítás(moderator)!</p>";
-		} else {
-			return "<p>Sikertelen jog beállítás(moderator)!</p>";
+			return "<p>Sikertelen változtatás!</p>";
 		}		
 	}
 	
-	public function hal_update_perm_given($input_hal_id, $input_hal_perm)
-	{
-		if ($input_hal_id == "") { return "<p>Sikertelen jog beállítás, hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals 
-					  SET
-						hal_perm = '$input_hal_perm'
-					  WHERE
-						hal_id = $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres jog beállítás!</p>";
-		} else {
-			return "<p>Sikertelen jog beállítás!</p>";
-		}
-	}
-	
-	public function hal_update_plus100($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen credit növelés, hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals
-					  SET
-						hal_credit = (hal_credit+100)
-					  WHERE 
-						hal_id	= $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres credit növelés!</p>";
-		} else {
-			return "<p>Sikertelen credit növelés!</p>";
-		}		
-	}	
-	public function hal_update_minus100($input_hal_id){
-		if($input_hal_id=="") { return "<p>Sikertelen credit csökkentés, hiányzó azonosító!</p>"; }
-		$this->sql = "UPDATE 
-						hals
-					  SET
-						hal_credit = (hal_credit-100)
-					  WHERE 
-						hal_id	= $input_hal_id";
-		if($this->conn->query($this->sql)){
-			return "<p>Sikeres credit csökkentés!</p>";
-		} else {
-			return "<p>Sikertelen credit csökkentés!</p>";
-		}		
-	}	
 	public function hal_update(){}
 	
 
